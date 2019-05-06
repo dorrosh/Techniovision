@@ -1,0 +1,10 @@
+inside contest 123 hello cs
+inside contest 1 natan cs
+inside contest 2 natan hr
+inside contest 3 hello cs
+inside contest 5 f cs
+inside contest 6 g cs
+staff choice natan HASHMAL
+staff choice world hello bla natan cs
+inside contest 7 world
+inside contest 1 bla cs
