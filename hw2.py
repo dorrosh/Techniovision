@@ -16,7 +16,8 @@ def inside_contest(faculty, file_name):
     for line in file_name:
         programNameVote = line.split()
         if programNameVote[0] == "inside" and programNameVote[1] == "contest":
-            if programNameVote[2] in votersIds or programNameVote[-1] != faculty:
+            if programNameVote[2] in votersIds or \
+               programNameVote[-1] != faculty:
                 continue
             votersIds.append(programNameVote[2])
             for iterator in facultyPrograms:
@@ -54,37 +55,35 @@ def findWinnerProgram(faculty_programs):
 
 
 def runTechniovision(file_name):
-    techniovision = []
+    contestList = []
     position = 0
-    input_file = open(file_name, 'r')
-    for line in input_file:
+    inputFile = open(file_name, 'r')
+    for line in inputFile:
         programNameVote = line.split()
         if programNameVote[0] == "staff" and programNameVote[1] == "choice":
             faculty = programNameVote[-1]
-            input_file.close()
-            techniovision.append([faculty, inside_contest(faculty, file_name)])
-            input_file = open(file_name, 'r')
-            input_file.seek(position)
-        input_file = open(file_name, 'r')
-    input_file = open(file_name, 'r')
-    studentsId = []
-    t = Techniovision.TechniovisionCreate()
-    for line in input_file:
+            inputFile.close()
+            contestList.append([faculty, inside_contest(faculty, file_name)])
+            inputFile = open(file_name, 'r')
+            inputFile.seek(position)
+        inputFile = open(file_name, 'r')
+    inputFile = open(file_name, 'r')
+    techniovision = Techniovision.TechniovisionCreate()
+    for line in inputFile:
         lineString = line.split()
         if lineString[0] == "techniovision":
-            if lineString[1] not in studentsId:
-                studentsId.append(lineString[1])
-                for index in techniovision:
-                    if index[1] == lineString[2]:
-                        Techniovision.TechniovisionStudentVotes(t, int(lineString[1]),
-                                                                str(lineString[-1]), str(index[0]))
-                        break
-    Techniovision.TechniovisionWinningFaculty(t)
-    Techniovision.TechniovisionDestroy(t)
+            for index in contestList:
+                if index[1] == lineString[2]:
+                    Techniovision.TechniovisionStudentVotes\
+                    (techniovision, int(lineString[1]),\
+                    str(lineString[-1]), str(index[0]))
+                    break
+    Techniovision.TechniovisionWinningFaculty(techniovision)
+    Techniovision.TechniovisionDestroy(techniovision)
 
 
 def main():
-    runTechniovision("test.txt")
+    runTechniovision("input.txt")
 
 
 if __name__ == '__main__':
